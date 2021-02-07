@@ -3,7 +3,8 @@ class localStorageService
 
     static adicionarItem(chave, valor)
     {
-        localStorage.addItem(chave, JSON.stringify(valor));
+        const texto = JSON.stringify(valor);        
+        localStorage.setItem(chave, texto);
     }
 
     static obterItem(chave)

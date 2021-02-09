@@ -5,6 +5,7 @@ import Home from '../views/home';
 import Login from '../views/login';
 import CadastroUsuario from '../views/cadastroUsuario';
 import ConsultaLancamentos from '../views/lancamentos/consultaLancamentos';
+import CadastroLancamentos from '../views/lancamentos/cadastroLancamentos';
 
 function Rotas()
 {
@@ -33,7 +34,12 @@ function Rotas()
                 <Route  
                     path="/consulta-lancamentos" 
                     component={ConsultaLancamentos} 
-                />                
+                />      
+
+                <Route  
+                    path="/cadastro-lancamentos" 
+                    component={CadastroLancamentos} 
+                />                             
 
             </Switch>
 

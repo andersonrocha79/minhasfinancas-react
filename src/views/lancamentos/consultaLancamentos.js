@@ -1,5 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { Dialog } from 'primereact/dialog';
+import { Button } from 'primereact/button';
 
 import Card from '../../components/card';
 import FormGroup from '../../components/form-group';
@@ -11,7 +13,6 @@ import LocalStorageService from '../../app/service/localStorageService';
 
 import * as messages from '../../components/toastr';
 
-
 class ConsultaLancamentos extends React.Component
 {
 
@@ -21,7 +22,9 @@ class ConsultaLancamentos extends React.Component
         mes: '',
         tipo: '',
         descricao: '',
-        lancamentos: []
+        lancamentos: [],
+        showConfirmDialog : false,
+        lancamentoDeletar: {}
     }
 
     constructor()
@@ -29,6 +32,43 @@ class ConsultaLancamentos extends React.Component
         super();
         this.service = new LancamentoService();
     }
+
+    editar = (id) =>
+    {
+
+    }
+
+    abrirConfirmacao = (lancamento) =>
+    {
+        this.setState({showConfirmDialog : true, lancamentoDeletar: lancamento})
+    }
+
+    cancelarExclusao = () =>
+    {
+        this.setState({showConfirmDialog : false, lancamentoDeletar: {} });
+    }    
+
+    deletar = () =>
+    {
+
+        this.service
+            .deletar(this.state.lancamentoDeletar.id)
+            .then(response =>
+            {
+                // exclui o lançamento no array
+                const lancamentos = this.state.lancamentos;
+                const index = lancamentos.indexOf(this.state.lancamentoDeletar);
+                lancamentos.splice(index, 1);
+                this.setState(lancamentos);
+                messages.mensagemSucesso("Lançamento excluído com sucesso.");  
+            })
+            .catch( error =>
+            {
+               messages.mensagemErro("Erro ao tentar excluir o lançamento.");
+            });
+    }
+
+
 
     buscar = () =>
     {
@@ -79,6 +119,17 @@ class ConsultaLancamentos extends React.Component
         const meses = this.service.obterListaMeses();
 
         const tipos = this.service.obterListaTipos();
+
+        const confirmDialogFooter = (name) => 
+        {
+            return (
+                <div>
+                    <Button label="Confirmar" icon="pi pi-check" onClick={this.deletar}  />
+                    <Button label="Desistir"  icon="pi pi-times" className="p-button-text" onClick={this.cancelarExclusao} autoFocus />
+                </div>
+            );
+        }
+    
    
         return (
 
@@ -170,11 +221,27 @@ class ConsultaLancamentos extends React.Component
 
                             <LancamentosTable
                                 lancamentos={this.state.lancamentos}
+                                deleteAction={this.abrirConfirmacao}
+                                editarAction={this.editar}
                             />
 
                         </div>
 
                     </div>
+
+                </div>
+
+                <div>
+
+                    <Dialog 
+                        header="Confirmação" 
+                        visible={this.state.showConfirmDialog} 
+                        style={{ width: '30vw' }}
+                        modal={true}
+                        footer={confirmDialogFooter}
+                        onHide={() => this.setState({showConfirmDialog: false})}>
+                        <p>Confirma a exclusão definitiva deste lançamento ?</p>
+                    </Dialog>                    
 
                 </div>
 

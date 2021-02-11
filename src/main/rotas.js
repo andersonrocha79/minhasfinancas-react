@@ -37,7 +37,7 @@ function Rotas()
                 />      
 
                 <Route  
-                    path="/cadastro-lancamentos" 
+                    path="/cadastro-lancamentos/:id?" 
                     component={CadastroLancamentos} 
                 />                             
 

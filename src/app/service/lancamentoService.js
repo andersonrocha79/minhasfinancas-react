@@ -1,4 +1,5 @@
 import ApiService from '../apiService';
+import ErroValidacao from '../exception/ErroValidacao';
 
 export default class LancamentoService extends ApiService
 {
@@ -35,6 +36,11 @@ export default class LancamentoService extends ApiService
             {label: 'Despesa', value: 'DESPESA'},
             {label: 'Receita', value: 'RECEITA'},
         ]
+    }
+
+    obterPorId(id)
+    {
+        return this.get(`/${id}`);
     }
 
 
@@ -80,6 +86,53 @@ export default class LancamentoService extends ApiService
     deletar(id)
     {
         return this.delete(`/${id}`);
+    }
+
+    salvar(lancamento)
+    {
+        return this.post('/', lancamento);
+    }
+
+    atualizar(lancamento)
+    {
+        return this.put(`/${lancamento.id}`, lancamento);
+    }    
+
+    validar(lancamento)
+    {
+
+        const erros = [];
+
+        if (!lancamento.ano)
+        {
+            erros.push("O ano deve ser informado.");
+        }
+
+        if (!lancamento.mes)
+        {
+            erros.push("O mês deve ser informado.");
+        }
+
+        if (!lancamento.descricao)
+        {
+            erros.push("A descrição deve ser informado.");
+        }
+
+        if (!lancamento.valor)
+        {
+            erros.push("O valor deve ser informado.");
+        }
+
+        if (!lancamento.tipo)
+        {
+            erros.push("O tipo deve ser informado.");
+        }
+
+        if (erros && erros.length > 0)
+        {
+            throw new ErroValidacao(erros);
+        }
+
     }
 
 }

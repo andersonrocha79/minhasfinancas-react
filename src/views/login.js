@@ -45,8 +45,8 @@ class Login extends React.Component
                     }).catch( erro =>
                     {
 
-                        console.log('falha no login: ', erro);
-                        mensagemErro(erro.Error);
+                        console.log('falha no login: ', erro.response.data);
+                        mensagemErro(erro.response.data);
 
                     });
 

@@ -29,25 +29,32 @@ class CadastroUsuario extends React.Component
 
         console.log("registro: ", this.state);
 
-        const msgs = this.validar();
-
-        if (msgs && msgs.length > 0)
+        const { nome, email, senha, senhaConfirmacao } = this.state;
+        
+        const usuario = 
         {
-            msgs.forEach( (msg, index) =>
+            nome,
+            email,
+            senha,
+            senhaConfirmacao
+        }
+
+        try 
+        {
+            this.service.validar(usuario);            
+        } 
+        catch (error) 
+        {
+            const mensagens = error.mensagens;
+            mensagens.forEach(msg =>
             {
                 mensagemErro(msg);
             });
-            return false;
-        }
+            return false;            
+        }        
 
-        const usuarioDTO = 
-        {
-            nome: this.state.nome,
-            email: this.state.email,
-            senha: this.state.senha
-        }
-
-        this.service.salvar(usuarioDTO)
+        this.service
+            .salvar(usuario)
             .then(response =>
             {
                 mensagemSucesso("Usuário cadastrado com sucesso.\nFaça o login para acessar o sistema.");
@@ -63,44 +70,6 @@ class CadastroUsuario extends React.Component
     cancelar = () =>
     {
         this.props.history.push("/login")
-    }
-
-    validar()
-    {
-
-        const msgs = [];
-
-        if (!this.state.nome || this.state.nome.trim() === "")
-        {
-            msgs.push("O nome deve ser informado.");
-        }
-
-        if (!this.state.email || this.state.email.trim() === "")
-        {
-            msgs.push("O e-mail deve ser informado.");
-        }
-        else if (!this.state.email.match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]/)) // regex
-        {
-            msgs.push("O e-mail informado é inválido.");
-        }
-
-        if (!this.state.senha || this.state.senha.trim() === "")
-        {
-            msgs.push("A senha deve ser informada.");
-        }
-
-        if (!this.state.senhaConfirmacao || this.state.senhaConfirmacao.trim() === "")
-        {
-            msgs.push("A confirmação da senha deve ser informada.");
-        }
-
-        if (this.state.senha !== this.state.senhaConfirmacao)
-        {
-            msgs.push("As senhas informadas não conferem.");
-        }
-
-        return msgs;
-
     }
 
     render()

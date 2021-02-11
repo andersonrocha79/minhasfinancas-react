@@ -35,7 +35,7 @@ class ConsultaLancamentos extends React.Component
 
     editar = (id) =>
     {
-
+        this.props.history.push(`/cadastro-lancamentos/${id}`);
     }
 
     abrirConfirmacao = (lancamento) =>
@@ -111,6 +111,11 @@ class ConsultaLancamentos extends React.Component
                 messages.mensagemErro(erro);
             })
 
+    }
+
+    preparaFormularioCadastro = () =>
+    {
+        this.props.history.push("/cadastro-lancamentos");        
     }
 
     render()
@@ -206,7 +211,7 @@ class ConsultaLancamentos extends React.Component
                     </div>
  
                     <div className="col-md-6">
-                        <button className="btn btn-danger" onClick={this.cadastrar}>Cadastrar</button>                   
+                        <button className="btn btn-danger" onClick={this.preparaFormularioCadastro}>Cadastrar</button>                   
                     </div>
 
                 </div>

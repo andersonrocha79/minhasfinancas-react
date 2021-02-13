@@ -134,9 +134,17 @@ class CadastroUsuario extends React.Component
 
                                 </FormGroup>
 
-                                <button className="btn btn-success" onClick={this.cadastrar}>Cadastrar</button>
+                                <button className="btn btn-success" 
+                                        onClick={this.cadastrar}>
+                                        <i className="pi pi-save"></i>
+                                        Cadastrar
+                                </button>
 
-                                <button className="btn btn-danger" onClick={this.cancelar}>Cancelar</button>
+                                <button className="btn btn-danger" 
+                                        onClick={this.cancelar}>
+                                        <i className="pi pi-times"></i>
+                                        Cancelar
+                                </button>
                                     
                             </fieldset>
 

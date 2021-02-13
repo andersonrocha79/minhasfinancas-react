@@ -1,15 +1,25 @@
 import React from 'react';
 
-function NavBarItem(props)
+function NavBarItem( { render, ...props } )
 {
 
-    return (
+    if (render)
+    {
 
-        <li className="nav-item">
-            <a className="nav-link" href={props.href}>{props.label}</a>
-        </li>        
+        return (
 
-    )
+            <li className="nav-item">
+                <a onClick={props.onClick} className="nav-link" href={props.href}>{props.label}</a>
+            </li>        
+    
+        )
+    
+    }
+    else
+    {
+        return false; // indica que não deve ser renderizado
+    }
+
 
 }
 

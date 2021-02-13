@@ -135,4 +135,13 @@ export default class LancamentoService extends ApiService
 
     }
 
+    alterarStatus(id, status)
+    {
+
+        const lancamentoDTO = { status: status }
+
+        return this.put(`/${id}/atualiza-status`, lancamentoDTO);
+
+    }
+
 }

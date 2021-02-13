@@ -1,4 +1,5 @@
 import React from 'react'
+import { AuthContext } from '../main/ProvedorAutenticacao';
 
 import Card from '../components/card'
 import FormGroup from '../components/form-group'
@@ -37,7 +38,8 @@ class Login extends React.Component
                         console.log('sucesso', response);
 
                         // grava o usuário logado no 'localStorage'
-                        localStorageService.adicionarItem("_usuario_logado", response.data);
+                        // localStorageService.adicionarItem("_usuario_logado", response.data);
+                        this.context.iniciarSessao(response.data);
 
                         // login efetuado com sucesso
                         this.props.history.push("/home"); 
@@ -134,9 +136,19 @@ class Login extends React.Component
 
                                             </FormGroup>
 
-                                            <button className="btn btn-success" onClick={this.entrar}>Entrar</button>
+                                            <button 
+                                                className="btn btn-success" 
+                                                onClick={this.entrar}>
+                                                <i className="pi pi-sign-in"></i>
+                                                Entrar
+                                            </button>
 
-                                            <button className="btn btn-danger" onClick={this.prepareCadastrar}>Cadastrar</button>
+                                            <button 
+                                                className="btn btn-danger" 
+                                                onClick={this.prepareCadastrar}>
+                                                <i className="pi pi-plus"></i>
+                                                Cadastrar
+                                            </button>
                                                 
                                         </fieldset>
 
@@ -159,5 +171,8 @@ class Login extends React.Component
     }
 
 }
+
+// se inscreve no texto para ter acesso as propriedades exportadas pelo ProvedorAutenticacao
+Login.contextType = AuthContext
 
 export default withRouter( Login )

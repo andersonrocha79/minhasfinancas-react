@@ -12,6 +12,11 @@ class localStorageService
         return  JSON.parse(localStorage.getItem(chave));
     }
 
+    static removerItem(chave)
+    {
+        localStorage.removeItem(chave);
+    }
+
 }
 
 export default localStorageService;

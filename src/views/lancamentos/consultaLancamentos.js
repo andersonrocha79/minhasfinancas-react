@@ -48,6 +48,30 @@ class ConsultaLancamentos extends React.Component
         this.setState({showConfirmDialog : false, lancamentoDeletar: {} });
     }    
 
+    alterarStatus = (lancamento, status) =>
+    {
+
+        console.log('lancamento alterado: ', lancamento)
+        this.service
+            .alterarStatus(lancamento.id, status)
+            .then( response =>
+            {
+                const lancamentos = this.state.lancamentos;
+                const index = lancamentos.indexOf(lancamento);
+                if (index !== -1)
+                {
+                    lancamento['status'] = status;
+                    lancamentos[index]   = lancamento;
+                    this.setState({lancamentos : lancamentos});
+                }
+                messages.mensagemSucesso("Status atualizado com sucesso");
+            })
+            .catch( error =>
+            {
+                messages.mensagemErro("Erro ao tentar alterar o status do lançamento.");
+            });            
+    }
+
     deletar = () =>
     {
 
@@ -103,8 +127,13 @@ class ConsultaLancamentos extends React.Component
             .consultar(lancamentoFiltro)
             .then( response =>
             {
-                console.log("lancamentos", response.data);
-                this.setState({lancamentos : response.data});
+                const lista = response.data;
+                if (lista.length < 1)
+                {
+                    messages.mensagemAlerta("Nenhum resultado encontrado!");
+                }
+                console.log("lancamentos", lista);
+                this.setState({lancamentos : lista});
             })
             .catch( erro =>
             {
@@ -206,13 +235,21 @@ class ConsultaLancamentos extends React.Component
 
                 <div className="row">
 
-                    <div className="col-md-6">
-                        <button className="btn btn-success" onClick={this.buscar}>Buscar</button>
-                    </div>
- 
-                    <div className="col-md-6">
-                        <button className="btn btn-danger" onClick={this.preparaFormularioCadastro}>Cadastrar</button>                   
-                    </div>
+                    <div className="col-md-12">
+
+                        <button className="btn btn-success" 
+                                onClick={this.buscar}>
+                                <i className="pi pi-search"></i>
+                                 Buscar
+                        </button>
+
+                        <button className="btn btn-danger" 
+                                onClick={this.preparaFormularioCadastro}>
+                                <i className="pi pi-plus"></i>
+                                 Cadastrar
+                        </button>                   
+
+                    </div>                    
 
                 </div>
 
@@ -228,6 +265,7 @@ class ConsultaLancamentos extends React.Component
                                 lancamentos={this.state.lancamentos}
                                 deleteAction={this.abrirConfirmacao}
                                 editarAction={this.editar}
+                                alterarStatus={this.alterarStatus}
                             />
 
                         </div>

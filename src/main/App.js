@@ -23,6 +23,7 @@ import 'primeicons/primeicons.css';
 
 import Rotas from './rotas';
 import Navbar from '../components/navbar';
+import ProvedorAutenticacao from './ProvedorAutenticacao';
 
 class App extends React.Component 
 {
@@ -32,9 +33,8 @@ class App extends React.Component
 
         return (
 
-
-            <div>
-
+            <ProvedorAutenticacao>
+        
                 <Navbar />
 
                 <div className="container">
@@ -43,7 +43,7 @@ class App extends React.Component
 
                 </div>
 
-            </div>
+            </ProvedorAutenticacao>
 
         );
 

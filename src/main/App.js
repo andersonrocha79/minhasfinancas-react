@@ -10,6 +10,12 @@ import React from 'react';
 // http://react-materialize.github.io/react-materialize/?path=/story/react-materialize--welcome
 // https://primefaces.org/primereact/showcase/#/calendar
 
+// projeto executando no heroku
+// https://rochasoft-minhasfinancas-app.herokuapp.com/#/login
+
+// api rest
+// https://rochasoft-minhasfinancas-api.herokuapp.com/
+
 
 import 'toastr/build/toastr.min.js';
 

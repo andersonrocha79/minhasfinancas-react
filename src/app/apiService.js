@@ -2,7 +2,8 @@ import axios from 'axios';
 
 const httpClient = axios.create(
 {
-    baseURL: "http://localhost:8080"   
+    // baseURL: "http://localhost:8080"   
+    baseURL: "https://rochasoft-minhasfinancas-api.herokuapp.com/"
 })
 
 class ApiService

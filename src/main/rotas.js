@@ -51,11 +51,6 @@ function Rotas(props)
             <Switch>
 
                 <Route 
-                    path="/" 
-                    component={Login}
-                />
-
-                <Route 
                     path="/login" 
                     component={Login}
                 />
